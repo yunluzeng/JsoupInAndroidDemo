@@ -57,16 +57,16 @@ public class JobListAdapter extends BaseAdapter {
 
         Jobs.Item item = mJobList.get(i);
         viewHolder.mPostionTextView.setText("序号：" + (i+1));
-        viewHolder.mTitleTextView.setText(item.getTitle());
-        viewHolder.mSalaryTextView.setText(item.getSalary() + item.getUnit());
-        viewHolder.mCompanyTextView.setText(item.getCompany());
-        viewHolder.mLocationTextView.setText(item.getLocation());
-        viewHolder.mPublishDateTextView.setText(item.getPublishDate());
+        viewHolder.mTitleTextView.setText("职位：" + item.getTitle());
+        viewHolder.mSalaryTextView.setText("薪水：" + (item.getSalaryRange().length() != 0 ? item.getSalaryRange() : "面议"));
+        viewHolder.mCompanyTextView.setText("公司：" + item.getCompany());
+        viewHolder.mLocationTextView.setText("地点：" + item.getLocation());
+        viewHolder.mPublishDateTextView.setText("发布日期：" + item.getPublishDate());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(mContext,JobDetailsActivity.class);
+                Intent i = new Intent(mContext,JobWebViewActivity.class);
                 i.putExtra("url",item.getHref());
                 mContext.startActivity(i);
             }

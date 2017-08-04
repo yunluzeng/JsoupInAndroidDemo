@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements Crawl.OnCallbackL
     private ArrayList<Jobs.Item> mJobList = new ArrayList<>();
     private JobListAdapter mJobAdapter;
     private ProgressDialog dialog;
+    private View mNoResultView;
 
     private Handler handler = new Handler(){
         @Override
@@ -28,7 +30,14 @@ public class MainActivity extends AppCompatActivity implements Crawl.OnCallbackL
             switch (msg.what){
                 case 1:
                     dialog.dismiss();
-                    mJobAdapter.notifyDataSetChanged();
+                    if(mJobList.size()> 0) {
+                        if(mListView.getFooterViewsCount() != 0){
+                            mListView.removeFooterView(mNoResultView);
+                        }
+                        mJobAdapter.notifyDataSetChanged();
+                    }else{
+                        mListView.addFooterView(mNoResultView);
+                    }
                     break;
             }
         }
@@ -47,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements Crawl.OnCallbackL
     }
 
     private void init(){
+        mNoResultView = LayoutInflater.from(this).inflate(R.layout.no_result_layout,null);
         mEditText = (EditText) findViewById(R.id.edit_text);
         mSearchBtn = (Button) findViewById(R.id.search);
         mListView = (ListView) findViewById(R.id.listview);

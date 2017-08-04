@@ -79,16 +79,8 @@ public class JobDetailsActivity extends AppCompatActivity {
             Elements elements = document.getElementsByClass("bmsg job_msg inbox");
             for(Element e : elements){
                 descForJobTitle = e.select("span").first().text();
-                String[] strs = e.text().split(" ");
-                for (String str: strs){
-                    Log.d("jsoup","str = " + str);
-                }
                 descForJobContent = e.text();
-//                e.select("bmsg job_msg inbox br").text();
-
-
                 Log.d("jsoup","lable = " + descForJobTitle + "\n");
-                Log.d("jsoup","msg = " + e.text() + "\n" + ",strs length = " + strs.length);
                 handler.sendEmptyMessage(1);
             }
 
